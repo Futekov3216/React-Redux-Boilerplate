@@ -1,28 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {connect} from 'react-redux';
+import Vatre from './Vatre'
+import {fetch_player_cell, fetch_player_name} from './actions/index'
 import './App.css';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      players:[]
+    }
+  }
+
+ localFetchPlayer = async () => {
+  this.props.fetch_player_cell(5)
+ }
+ localFetchPlayerName = async () => {
+    this.props.fetch_player_name(10)
+ }
+
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div>Players<span>{"ZDRE"}</span></div>
+        <button onClick={this.localFetchPlayer}>Fetch players</button>
+        <button onClick={this.localFetchPlayerName}>Fetch Names</button> 
+          <Vatre />
       </div>
     );
   }
 }
-
-export default App;
+function map_state_to_props(state){
+  // console.log(state)
+  return {
+        // players: state    
+     }
+}
+export default connect(map_state_to_props,{fetch_player_cell, fetch_player_name})(App)
